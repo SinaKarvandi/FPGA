@@ -1,0 +1,8 @@
+## UCF File 
+
+NET "Sum" LOC = P205; ## LED
+NET "Cout" LOC = P204; ## LED
+
+NET "A" LOC = P50; ## Switch
+NET "B" LOC = P51; ## Switch
+NET "Cin" LOC = P52; ## Switch

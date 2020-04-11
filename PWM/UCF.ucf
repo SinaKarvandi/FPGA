@@ -1,0 +1,18 @@
+## UCF File 
+
+NET "Output1" LOC = P205; ## LED
+NET "Output2" LOC = P204; ## LED
+NET "Output3" LOC = P203; ## LED
+NET "Output4" LOC = P200; ## LED
+##NET "Dataout<4>" LOC = P199; ## LED
+##NET "Dataout<5>" LOC = P198; ## LED
+##NET "Dataout<6>" LOC = P197; ## LED
+##NET "Dataout<7>" LOC = P196; ## LED
+
+
+NET "Clk" LOC = P79;
+
+NET "Rst" LOC = P50; ## Switch
+NET "Input1" LOC = P51; ## Switch
+NET "Input2" LOC = P52; ## Switch
+##NET "Switch4" LOC = P57; ## Switch

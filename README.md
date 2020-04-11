@@ -1,2 +1,3 @@
-# FPGA
-My VHDL and FPGA things
+# FPGA 
+
+This is my exercises for FPGA class + Projects of class.
