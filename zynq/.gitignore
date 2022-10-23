@@ -37,7 +37,6 @@
 *.hw
 *.ip_user_files
 *.sim
-*.runs
 
 ### IP synth
 *_synth_*
@@ -45,38 +44,38 @@
 .jobs
 
 ### project synth
-#*/*.runs/synth*/*.xml
-#*/*.runs/synth*/*.txt
-#*/*.runs/synth*/*.sh
-#*/*.runs/synth*/*.tcl
-#*/*.runs/synth*/*.bat
-#*/*.runs/synth*/*.xdc
-#!*/*.runs/synth*/*utilization*.rpt
+*/*.runs/synth*/*.xml
+*/*.runs/synth*/*.txt
+*/*.runs/synth*/*.sh
+*/*.runs/synth*/*.tcl
+*/*.runs/synth*/*.bat
+*/*.runs/synth*/*.xdc
+!*/*.runs/synth*/*utilization*.rpt
 
-#*.runs/synth*/*.xml
-#*.runs/synth*/*.txt
-#*.runs/synth*/*.sh
-#*.runs/synth*/*.tcl
-#*.runs/synth*/*.bat
-#*.runs/synth*/*.xdc
-#!*.runs/synth*/*utilization*.rpt
+*.runs/synth*/*.xml
+*.runs/synth*/*.txt
+*.runs/synth*/*.sh
+*.runs/synth*/*.tcl
+*.runs/synth*/*.bat
+*.runs/synth*/*.xdc
+!*.runs/synth*/*utilization*.rpt
 
 ### project impl
-#*/*.runs/impl*/*.xml
-#*/*.runs/impl*/*.html
-#*/*.runs/impl*/*.txt
-#*/*.runs/impl*/*.sh
-#*/*.runs/impl*/*.tcl
-#*/*.runs/impl*/*.bat
-#!*/*.runs/impl*/*utilization*.rpt
+*/*.runs/impl*/*.xml
+*/*.runs/impl*/*.html
+*/*.runs/impl*/*.txt
+*/*.runs/impl*/*.sh
+*/*.runs/impl*/*.tcl
+*/*.runs/impl*/*.bat
+!*/*.runs/impl*/*utilization*.rpt
 
-#*.runs/impl*/*.xml
-#*.runs/impl*/*.html
-#*.runs/impl*/*.txt
-#*.runs/impl*/*.sh
-#*.runs/impl*/*.tcl
-#*.runs/impl*/*.bat
-#!*.runs/impl*/*utilization*.rpt
+*.runs/impl*/*.xml
+*.runs/impl*/*.html
+*.runs/impl*/*.txt
+*.runs/impl*/*.sh
+*.runs/impl*/*.tcl
+*.runs/impl*/*.bat
+!*.runs/impl*/*utilization*.rpt
 
 ### block design
 */*/bd/*/hdl
