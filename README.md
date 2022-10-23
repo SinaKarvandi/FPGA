@@ -1,3 +1,2 @@
-# FPGA 
-
-This is my exercises for FPGA class + Projects of class.
+# zynq
+My fun coding journey with Xilinx Zynq
