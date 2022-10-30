@@ -1,7 +1,7 @@
 --Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2022.1 (win64) Build 3526262 Mon Apr 18 15:48:16 MDT 2022
---Date        : Sun Oct 23 20:22:27 2022
+--Date        : Sun Oct 30 23:37:07 2022
 --Host        : DESKTOP-SEM2DAL running 64-bit major release  (build 9200)
 --Command     : generate_target design_1.bd
 --Design      : design_1
@@ -120,13 +120,13 @@ architecture STRUCTURE of design_1 is
     Dout : out STD_LOGIC_VECTOR ( 3 downto 0 )
   );
   end component design_1_xlslice_1_1;
-  component design_1_mux_0_0 is
+  component design_1_dispaly_control_mux_0_0 is
   port (
     i_data : in STD_LOGIC_VECTOR ( 23 downto 0 );
     i_control : in STD_LOGIC;
     o_data : out STD_LOGIC_VECTOR ( 23 downto 0 )
   );
-  end component design_1_mux_0_0;
+  end component design_1_dispaly_control_mux_0_0;
   component design_1_data_generator_0_0 is
   port (
     i_clk : in STD_LOGIC;
@@ -205,7 +205,7 @@ data_generator_0: component design_1_data_generator_0_0
       o_eol => data_generator_0_o_eol,
       o_sof => data_generator_0_o_sof
     );
-mux_0: component design_1_mux_0_0
+dispaly_control_mux_0: component design_1_dispaly_control_mux_0_0
      port map (
       i_control => v_axi4s_vid_out_0_vid_active_video,
       i_data(23 downto 0) => v_axi4s_vid_out_0_vid_data1(23 downto 0),

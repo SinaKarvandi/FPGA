@@ -19,7 +19,7 @@
       "xlslice_0": "",
       "xlslice_1": "",
       "xlslice_2": "",
-      "mux_0": "",
+      "dispaly_control_mux_0": "",
       "data_generator_0": ""
     },
     "ports": {
@@ -213,14 +213,14 @@
           }
         }
       },
-      "mux_0": {
-        "vlnv": "xilinx.com:module_ref:mux:1.0",
-        "xci_name": "design_1_mux_0_0",
-        "xci_path": "ip\\design_1_mux_0_0\\design_1_mux_0_0.xci",
-        "inst_hier_path": "mux_0",
+      "dispaly_control_mux_0": {
+        "vlnv": "xilinx.com:module_ref:dispaly_control_mux:1.0",
+        "xci_name": "design_1_dispaly_control_mux_0_0",
+        "xci_path": "ip\\design_1_dispaly_control_mux_0_0\\design_1_dispaly_control_mux_0_0.xci",
+        "inst_hier_path": "dispaly_control_mux_0",
         "reference_info": {
           "ref_type": "hdl",
-          "ref_name": "mux",
+          "ref_name": "dispaly_control_mux",
           "boundary_crc": "0x0"
         },
         "ports": {
@@ -374,12 +374,12 @@
       "v_axi4s_vid_out_0_vid_active_video": {
         "ports": [
           "v_axi4s_vid_out_0/vid_active_video",
-          "mux_0/i_control"
+          "dispaly_control_mux_0/i_control"
         ]
       },
       "v_axi4s_vid_out_0_vid_data": {
         "ports": [
-          "mux_0/o_data",
+          "dispaly_control_mux_0/o_data",
           "xlslice_0/Din",
           "xlslice_1/Din",
           "xlslice_2/Din"
@@ -388,7 +388,7 @@
       "v_axi4s_vid_out_0_vid_data1": {
         "ports": [
           "v_axi4s_vid_out_0/vid_data",
-          "mux_0/i_data"
+          "dispaly_control_mux_0/i_data"
         ]
       },
       "v_axi4s_vid_out_0_vid_hsync": {

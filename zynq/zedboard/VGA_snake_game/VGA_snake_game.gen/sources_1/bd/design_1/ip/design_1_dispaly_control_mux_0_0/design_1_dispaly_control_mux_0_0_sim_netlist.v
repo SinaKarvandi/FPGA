@@ -1,21 +1,21 @@
 // Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2022.1 (win64) Build 3526262 Mon Apr 18 15:48:16 MDT 2022
-// Date        : Sun Oct 23 19:55:57 2022
+// Date        : Mon Oct 24 19:44:31 2022
 // Host        : DESKTOP-SEM2DAL running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode funcsim
-//               c:/Users/sina/Documents/zynq/VGA_Interface/VGA_Interface.gen/sources_1/bd/design_1/ip/design_1_mux_0_0/design_1_mux_0_0_sim_netlist.v
-// Design      : design_1_mux_0_0
+//               c:/Users/sina/Documents/FPGA/zynq/zedboard/VGA_snake_game/VGA_snake_game.gen/sources_1/bd/design_1/ip/design_1_dispaly_control_mux_0_0/design_1_dispaly_control_mux_0_0_sim_netlist.v
+// Design      : design_1_dispaly_control_mux_0_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
 // Device      : xc7z020clg484-1
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CHECK_LICENSE_TYPE = "design_1_mux_0_0,mux,{}" *) (* downgradeipidentifiedwarnings = "yes" *) (* ip_definition_source = "module_ref" *) 
-(* x_core_info = "mux,Vivado 2022.1" *) 
+(* CHECK_LICENSE_TYPE = "design_1_dispaly_control_mux_0_0,dispaly_control_mux,{}" *) (* downgradeipidentifiedwarnings = "yes" *) (* ip_definition_source = "module_ref" *) 
+(* x_core_info = "dispaly_control_mux,Vivado 2022.1" *) 
 (* NotValidForBitStream *)
-module design_1_mux_0_0
+module design_1_dispaly_control_mux_0_0
    (i_data,
     i_control,
     o_data);

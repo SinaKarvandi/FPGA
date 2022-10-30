@@ -46,44 +46,36 @@
 -- 
 -- DO NOT MODIFY THIS FILE.
 
--- IP VLNV: xilinx.com:module_ref:mux:1.0
+-- IP VLNV: xilinx.com:module_ref:dispaly_control_mux:1.0
 -- IP Revision: 1
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY design_1_mux_0_0 IS
+ENTITY design_1_dispaly_control_mux_0_0 IS
   PORT (
     i_data : IN STD_LOGIC_VECTOR(23 DOWNTO 0);
     i_control : IN STD_LOGIC;
     o_data : OUT STD_LOGIC_VECTOR(23 DOWNTO 0)
   );
-END design_1_mux_0_0;
+END design_1_dispaly_control_mux_0_0;
 
-ARCHITECTURE design_1_mux_0_0_arch OF design_1_mux_0_0 IS
+ARCHITECTURE design_1_dispaly_control_mux_0_0_arch OF design_1_dispaly_control_mux_0_0 IS
   ATTRIBUTE DowngradeIPIdentifiedWarnings : STRING;
-  ATTRIBUTE DowngradeIPIdentifiedWarnings OF design_1_mux_0_0_arch: ARCHITECTURE IS "yes";
-  COMPONENT mux IS
+  ATTRIBUTE DowngradeIPIdentifiedWarnings OF design_1_dispaly_control_mux_0_0_arch: ARCHITECTURE IS "yes";
+  COMPONENT dispaly_control_mux IS
     PORT (
       i_data : IN STD_LOGIC_VECTOR(23 DOWNTO 0);
       i_control : IN STD_LOGIC;
       o_data : OUT STD_LOGIC_VECTOR(23 DOWNTO 0)
     );
-  END COMPONENT mux;
-  ATTRIBUTE X_CORE_INFO : STRING;
-  ATTRIBUTE X_CORE_INFO OF design_1_mux_0_0_arch: ARCHITECTURE IS "mux,Vivado 2022.1";
-  ATTRIBUTE CHECK_LICENSE_TYPE : STRING;
-  ATTRIBUTE CHECK_LICENSE_TYPE OF design_1_mux_0_0_arch : ARCHITECTURE IS "design_1_mux_0_0,mux,{}";
-  ATTRIBUTE CORE_GENERATION_INFO : STRING;
-  ATTRIBUTE CORE_GENERATION_INFO OF design_1_mux_0_0_arch: ARCHITECTURE IS "design_1_mux_0_0,mux,{x_ipProduct=Vivado 2022.1,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=mux,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VHDL,x_ipSimLanguage=MIXED}";
-  ATTRIBUTE IP_DEFINITION_SOURCE : STRING;
-  ATTRIBUTE IP_DEFINITION_SOURCE OF design_1_mux_0_0_arch: ARCHITECTURE IS "module_ref";
+  END COMPONENT dispaly_control_mux;
 BEGIN
-  U0 : mux
+  U0 : dispaly_control_mux
     PORT MAP (
       i_data => i_data,
       i_control => i_control,
       o_data => o_data
     );
-END design_1_mux_0_0_arch;
+END design_1_dispaly_control_mux_0_0_arch;

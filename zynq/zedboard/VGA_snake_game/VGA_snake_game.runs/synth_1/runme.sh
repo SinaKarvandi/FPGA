@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Users/sina/Documents/zynq/VGA_Interface/VGA_Interface.runs/synth_1'
+HD_PWD='C:/Users/sina/Documents/FPGA/FPGA/zynq/zedboard/VGA_snake_game/VGA_snake_game.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
