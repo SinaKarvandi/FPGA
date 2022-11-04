@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="60" Path="C:/Users/sina/Documents/FPGA/FPGA/zynq/zedboard/VGA_snake_game/VGA_snake_game.xpr">
+<Project Version="7" Minor="60" Path="C:/Users/sina/Documents/FPGA/zynq/zedboard/VGA_snake_game/VGA_snake_game.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="5c83d69be1994c39b48d5a8375894fcc"/>
@@ -58,7 +58,7 @@
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
     <Option Name="DSABoardId" Val="zedboard"/>
-    <Option Name="WTXSimLaunchSim" Val="52"/>
+    <Option Name="WTXSimLaunchSim" Val="143"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -97,6 +97,12 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PSRCDIR/sources_1/new/debounce.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <File Path="$PSRCDIR/sources_1/new/display_interface.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -110,6 +116,12 @@
         </FileInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/new/graphic_memory.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
+      <File Path="$PSRCDIR/sources_1/new/next_move.vhd">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -140,20 +152,18 @@
         <CompFileExtendedInfo CompFileName="design_1.bd" FileRelPathName="ip/design_1_v_axi4s_vid_out_0_0/design_1_v_axi4s_vid_out_0_0.xci">
           <Proxy FileSetName="design_1_v_axi4s_vid_out_0_0"/>
         </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="design_1.bd" FileRelPathName="ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0.xci">
-          <Proxy FileSetName="design_1_clk_wiz_0_0"/>
-        </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="design_1.bd" FileRelPathName="ip/design_1_dispaly_control_mux_0_0/design_1_dispaly_control_mux_0_0.xci">
           <Proxy FileSetName="design_1_dispaly_control_mux_0_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="design_1.bd" FileRelPathName="ip/design_1_data_generator_0_0/design_1_data_generator_0_0.xci">
           <Proxy FileSetName="design_1_data_generator_0_0"/>
         </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="design_1.bd" FileRelPathName="ip/design_1_clk_wiz_0_0/design_1_clk_wiz_0_0.xci">
+          <Proxy FileSetName="design_1_clk_wiz_0_0"/>
+        </CompFileExtendedInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/imports/design_1_wrapper.vhd">
+      <File Path="$PGENDIR/sources_1/bd/design_1/hdl/design_1_wrapper.vhd">
         <FileInfo>
-          <Attr Name="ImportPath" Val="$PPRDIR/../VGA_Interface/VGA_Interface.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd"/>
-          <Attr Name="ImportTime" Val="1666524147"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
@@ -180,9 +190,15 @@
     </FileSet>
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1" RelGenDir="$PGENDIR/sim_1">
       <Filter Type="Srcs"/>
+      <File Path="$PSRCDIR/sim_1/new/tb_data_generator.vhd">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="data_generator"/>
+        <Option Name="TopModule" Val="tb_data_generator"/>
         <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>
@@ -276,7 +292,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_v_tc_0_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_v_tc_0_0" Part="xc7z020clg484-1" ConstrsSet="design_1_v_tc_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_v_tc_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_tc_0_0_synth_1" AutoRQSDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_tc_0_0_synth_1">
+    <Run Id="design_1_v_tc_0_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_v_tc_0_0" Part="xc7z020clg484-1" ConstrsSet="design_1_v_tc_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_v_tc_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_tc_0_0_synth_1" AutoRQSDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_tc_0_0_synth_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
         <Step Id="synth_design"/>
@@ -286,7 +302,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_rst_clk_wiz_0_148M_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_rst_clk_wiz_0_148M_0" Part="xc7z020clg484-1" ConstrsSet="design_1_rst_clk_wiz_0_148M_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_rst_clk_wiz_0_148M_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_rst_clk_wiz_0_148M_0_synth_1" AutoRQSDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_rst_clk_wiz_0_148M_0_synth_1">
+    <Run Id="design_1_rst_clk_wiz_0_148M_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_rst_clk_wiz_0_148M_0" Part="xc7z020clg484-1" ConstrsSet="design_1_rst_clk_wiz_0_148M_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_rst_clk_wiz_0_148M_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_rst_clk_wiz_0_148M_0_synth_1" AutoRQSDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_rst_clk_wiz_0_148M_0_synth_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
         <Step Id="synth_design"/>
@@ -296,7 +312,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_clk_wiz_0_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_clk_wiz_0_0" Part="xc7z020clg484-1" ConstrsSet="design_1_clk_wiz_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_clk_wiz_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_clk_wiz_0_0_synth_1" AutoRQSDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_clk_wiz_0_0_synth_1">
+    <Run Id="design_1_clk_wiz_0_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_clk_wiz_0_0" Part="xc7z020clg484-1" ConstrsSet="design_1_clk_wiz_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_clk_wiz_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_clk_wiz_0_0_synth_1" AutoRQSDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_clk_wiz_0_0_synth_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
         <Step Id="synth_design"/>
@@ -306,7 +322,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_v_axi4s_vid_out_0_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_v_axi4s_vid_out_0_0" Part="xc7z020clg484-1" ConstrsSet="design_1_v_axi4s_vid_out_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_v_axi4s_vid_out_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_axi4s_vid_out_0_0_synth_1" AutoRQSDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_axi4s_vid_out_0_0_synth_1">
+    <Run Id="design_1_v_axi4s_vid_out_0_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_v_axi4s_vid_out_0_0" Part="xc7z020clg484-1" ConstrsSet="design_1_v_axi4s_vid_out_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_v_axi4s_vid_out_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_axi4s_vid_out_0_0_synth_1" AutoRQSDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_axi4s_vid_out_0_0_synth_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
         <Step Id="synth_design"/>
@@ -316,7 +332,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_dispaly_control_mux_0_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_dispaly_control_mux_0_0" Part="xc7z020clg484-1" ConstrsSet="design_1_dispaly_control_mux_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_dispaly_control_mux_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PPRDIR/../../../../zynq/zedboard/VGA_snake_game/VGA_snake_game.srcs/utils_1/imports/design_1_dispaly_control_mux_0_0_synth_1" AutoRQSDir="$PPRDIR/../../../../zynq/zedboard/VGA_snake_game/VGA_snake_game.srcs/utils_1/imports/design_1_dispaly_control_mux_0_0_synth_1">
+    <Run Id="design_1_dispaly_control_mux_0_0_synth_1" Type="Ft3:Synth" SrcSet="design_1_dispaly_control_mux_0_0" Part="xc7z020clg484-1" ConstrsSet="design_1_dispaly_control_mux_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/design_1_dispaly_control_mux_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/design_1_dispaly_control_mux_0_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/design_1_dispaly_control_mux_0_0_synth_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
         <Step Id="synth_design"/>
@@ -338,7 +354,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="constrs_1" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/impl_1" AutoRQSDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/impl_1">
+    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="constrs_1" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/impl_1" AutoRQSDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/impl_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
         <Step Id="init_design"/>
@@ -356,7 +372,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_v_tc_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_v_tc_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_v_tc_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_tc_0_0_impl_1" AutoRQSDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_tc_0_0_impl_1">
+    <Run Id="design_1_v_tc_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_v_tc_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_v_tc_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_tc_0_0_impl_1" AutoRQSDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_tc_0_0_impl_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
         <Step Id="init_design"/>
@@ -373,7 +389,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_rst_clk_wiz_0_148M_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_rst_clk_wiz_0_148M_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_rst_clk_wiz_0_148M_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_rst_clk_wiz_0_148M_0_impl_1" AutoRQSDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_rst_clk_wiz_0_148M_0_impl_1">
+    <Run Id="design_1_rst_clk_wiz_0_148M_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_rst_clk_wiz_0_148M_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_rst_clk_wiz_0_148M_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_rst_clk_wiz_0_148M_0_impl_1" AutoRQSDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_rst_clk_wiz_0_148M_0_impl_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
         <Step Id="init_design"/>
@@ -390,7 +406,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_clk_wiz_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_clk_wiz_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_clk_wiz_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_clk_wiz_0_0_impl_1" AutoRQSDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_clk_wiz_0_0_impl_1">
+    <Run Id="design_1_clk_wiz_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_clk_wiz_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_clk_wiz_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_clk_wiz_0_0_impl_1" AutoRQSDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_clk_wiz_0_0_impl_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
         <Step Id="init_design"/>
@@ -407,7 +423,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_v_axi4s_vid_out_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_v_axi4s_vid_out_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_v_axi4s_vid_out_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_axi4s_vid_out_0_0_impl_1" AutoRQSDir="$PPRDIR/../../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_axi4s_vid_out_0_0_impl_1">
+    <Run Id="design_1_v_axi4s_vid_out_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_v_axi4s_vid_out_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_v_axi4s_vid_out_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_axi4s_vid_out_0_0_impl_1" AutoRQSDir="$PPRDIR/../../../../zynq/VGA_Interface/VGA_Interface.srcs/utils_1/imports/design_1_v_axi4s_vid_out_0_0_impl_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
         <Step Id="init_design"/>
@@ -424,7 +440,7 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
       <RQSFiles/>
     </Run>
-    <Run Id="design_1_dispaly_control_mux_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_dispaly_control_mux_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_dispaly_control_mux_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PPRDIR/../../../../zynq/zedboard/VGA_snake_game/VGA_snake_game.srcs/utils_1/imports/design_1_dispaly_control_mux_0_0_impl_1" AutoRQSDir="$PPRDIR/../../../../zynq/zedboard/VGA_snake_game/VGA_snake_game.srcs/utils_1/imports/design_1_dispaly_control_mux_0_0_impl_1">
+    <Run Id="design_1_dispaly_control_mux_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg484-1" ConstrsSet="design_1_dispaly_control_mux_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="design_1_dispaly_control_mux_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/design_1_dispaly_control_mux_0_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/design_1_dispaly_control_mux_0_0_impl_1">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2022"/>
         <Step Id="init_design"/>

@@ -36,4 +36,4 @@ set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_di
 # IP: bd/design_1/ip/design_1_data_generator_0_0/design_1_data_generator_0_0.xci
 set_property KEEP_HIERARCHY SOFT [get_cells -hier -filter {REF_NAME==design_1_data_generator_0_0 || ORIG_REF_NAME==design_1_data_generator_0_0} -quiet] -quiet
 
-# XDC: c:/Users/sina/Documents/FPGA/FPGA/zynq/zedboard/VGA_snake_game/VGA_snake_game.gen/sources_1/bd/design_1/design_1_ooc.xdc
+# XDC: c:/Users/sina/Documents/FPGA/zynq/zedboard/VGA_snake_game/VGA_snake_game.gen/sources_1/bd/design_1/design_1_ooc.xdc

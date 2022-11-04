@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x7D4470B78A430D1",
+      "boundary_crc": "0x859C24339699D5C3",
       "device": "xc7z020clg484-1",
       "gen_directory": "../../../../VGA_snake_game.gen/sources_1/bd/design_1",
       "name": "design_1",
@@ -79,6 +79,26 @@
       "VGA_B": {
         "direction": "O",
         "left": "3",
+        "right": "0"
+      },
+      "arrow_left": {
+        "direction": "I"
+      },
+      "arrow_right": {
+        "direction": "I"
+      },
+      "arrow_up": {
+        "direction": "I"
+      },
+      "arrow_down": {
+        "direction": "I"
+      },
+      "pause_button": {
+        "direction": "I"
+      },
+      "o_led_0": {
+        "direction": "O",
+        "left": "4",
         "right": "0"
       }
     },
@@ -282,6 +302,26 @@
             "left": "23",
             "right": "0"
           },
+          "i_arrow_left": {
+            "direction": "I"
+          },
+          "i_arrow_right": {
+            "direction": "I"
+          },
+          "i_arrow_up": {
+            "direction": "I"
+          },
+          "i_arrow_down": {
+            "direction": "I"
+          },
+          "o_led": {
+            "direction": "O",
+            "left": "4",
+            "right": "0"
+          },
+          "i_pause_button": {
+            "direction": "I"
+          },
           "o_data_valid": {
             "direction": "O"
           },
@@ -312,6 +352,12 @@
           "VGA_B"
         ]
       },
+      "arrow_right": {
+        "ports": [
+          "arrow_right",
+          "data_generator_0/i_arrow_right"
+        ]
+      },
       "clk_wiz_0_clk_out1": {
         "ports": [
           "clk_wiz_0/clk_out1",
@@ -339,10 +385,40 @@
           "v_axi4s_vid_out_0/s_axis_video_tlast"
         ]
       },
+      "data_generator_0_o_led": {
+        "ports": [
+          "data_generator_0/o_led",
+          "o_led_0"
+        ]
+      },
       "data_generator_0_o_sof": {
         "ports": [
           "data_generator_0/o_sof",
           "v_axi4s_vid_out_0/s_axis_video_tuser"
+        ]
+      },
+      "i_arrow_down_0_1": {
+        "ports": [
+          "arrow_down",
+          "data_generator_0/i_arrow_down"
+        ]
+      },
+      "i_arrow_left_0_1": {
+        "ports": [
+          "arrow_left",
+          "data_generator_0/i_arrow_left"
+        ]
+      },
+      "i_arrow_up_0_1": {
+        "ports": [
+          "arrow_up",
+          "data_generator_0/i_arrow_up"
+        ]
+      },
+      "i_pause_button_0_1": {
+        "ports": [
+          "pause_button",
+          "data_generator_0/i_pause_button"
         ]
       },
       "reset_rtl_1": {

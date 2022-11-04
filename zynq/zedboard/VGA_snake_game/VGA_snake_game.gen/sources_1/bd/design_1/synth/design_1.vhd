@@ -1,7 +1,7 @@
 --Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2022.1 (win64) Build 3526262 Mon Apr 18 15:48:16 MDT 2022
---Date        : Sun Oct 30 23:37:07 2022
+--Date        : Fri Nov  4 21:35:41 2022
 --Host        : DESKTOP-SEM2DAL running 64-bit major release  (build 9200)
 --Command     : generate_target design_1.bd
 --Design      : design_1
@@ -16,6 +16,12 @@ entity design_1 is
     VGA_B : out STD_LOGIC_VECTOR ( 3 downto 0 );
     VGA_G : out STD_LOGIC_VECTOR ( 3 downto 0 );
     VGA_R : out STD_LOGIC_VECTOR ( 3 downto 0 );
+    arrow_down : in STD_LOGIC;
+    arrow_left : in STD_LOGIC;
+    arrow_right : in STD_LOGIC;
+    arrow_up : in STD_LOGIC;
+    o_led_0 : out STD_LOGIC_VECTOR ( 4 downto 0 );
+    pause_button : in STD_LOGIC;
     reset : in STD_LOGIC;
     sys_clock : in STD_LOGIC;
     vid_hsync_0 : out STD_LOGIC;
@@ -132,6 +138,12 @@ architecture STRUCTURE of design_1 is
     i_clk : in STD_LOGIC;
     i_reset_n : in STD_LOGIC;
     o_data : out STD_LOGIC_VECTOR ( 23 downto 0 );
+    i_arrow_left : in STD_LOGIC;
+    i_arrow_right : in STD_LOGIC;
+    i_arrow_up : in STD_LOGIC;
+    i_arrow_down : in STD_LOGIC;
+    o_led : out STD_LOGIC_VECTOR ( 4 downto 0 );
+    i_pause_button : in STD_LOGIC;
     o_data_valid : out STD_LOGIC;
     i_data_ready : in STD_LOGIC;
     o_sof : out STD_LOGIC;
@@ -143,7 +155,12 @@ architecture STRUCTURE of design_1 is
   signal data_generator_0_o_data : STD_LOGIC_VECTOR ( 23 downto 0 );
   signal data_generator_0_o_data_valid : STD_LOGIC;
   signal data_generator_0_o_eol : STD_LOGIC;
+  signal data_generator_0_o_led : STD_LOGIC_VECTOR ( 4 downto 0 );
   signal data_generator_0_o_sof : STD_LOGIC;
+  signal i_arrow_down_0_1 : STD_LOGIC;
+  signal i_arrow_left_0_1 : STD_LOGIC;
+  signal i_arrow_up_0_1 : STD_LOGIC;
+  signal i_pause_button_0_1 : STD_LOGIC;
   signal reset_rtl_1 : STD_LOGIC;
   signal rst_clk_wiz_0_148M_peripheral_aresetn : STD_LOGIC_VECTOR ( 0 to 0 );
   signal sys_clock_1 : STD_LOGIC;
@@ -186,6 +203,11 @@ begin
   VGA_B(3 downto 0) <= VGA_B_Dout(3 downto 0);
   VGA_G(3 downto 0) <= xlslice_1_Dout(3 downto 0);
   VGA_R(3 downto 0) <= xlslice_0_Dout(3 downto 0);
+  i_arrow_down_0_1 <= arrow_down;
+  i_arrow_left_0_1 <= arrow_left;
+  i_arrow_up_0_1 <= arrow_up;
+  i_pause_button_0_1 <= pause_button;
+  o_led_0(4 downto 0) <= data_generator_0_o_led(4 downto 0);
   reset_rtl_1 <= reset;
   sys_clock_1 <= sys_clock;
   vid_hsync_0 <= v_axi4s_vid_out_0_vid_hsync;
@@ -197,12 +219,18 @@ clk_wiz_0: component design_1_clk_wiz_0_0
     );
 data_generator_0: component design_1_data_generator_0_0
      port map (
+      i_arrow_down => i_arrow_down_0_1,
+      i_arrow_left => i_arrow_left_0_1,
+      i_arrow_right => arrow_right,
+      i_arrow_up => i_arrow_up_0_1,
       i_clk => clk_wiz_0_clk_out1,
       i_data_ready => v_axi4s_vid_out_0_s_axis_video_tready,
+      i_pause_button => i_pause_button_0_1,
       i_reset_n => rst_clk_wiz_0_148M_peripheral_aresetn(0),
       o_data(23 downto 0) => data_generator_0_o_data(23 downto 0),
       o_data_valid => data_generator_0_o_data_valid,
       o_eol => data_generator_0_o_eol,
+      o_led(4 downto 0) => data_generator_0_o_led(4 downto 0),
       o_sof => data_generator_0_o_sof
     );
 dispaly_control_mux_0: component design_1_dispaly_control_mux_0_0

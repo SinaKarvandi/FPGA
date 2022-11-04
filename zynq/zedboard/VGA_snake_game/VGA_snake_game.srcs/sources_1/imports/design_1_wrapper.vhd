@@ -21,10 +21,10 @@ entity design_1_wrapper is
     vid_hsync_0 : out STD_LOGIC;
     vid_vsync_0 : out STD_LOGIC
   );
-end design_1_wrapper;
+end design_1_wrapper; 
 
 architecture STRUCTURE of design_1_wrapper is
-  component design_1 is
+  component design_1 is 
   port (
     sys_clock : in STD_LOGIC;
     reset : in STD_LOGIC;

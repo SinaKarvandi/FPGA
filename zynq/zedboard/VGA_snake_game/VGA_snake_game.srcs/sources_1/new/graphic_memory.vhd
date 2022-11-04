@@ -9,7 +9,6 @@ entity graphic_memory is
         );
     Port ( i_clk : in STD_LOGIC;
            i_reset_n : in STD_LOGIC;
-           i_pause : in STD_LOGIC;
            i_write : in STD_LOGIC;
            i_index_row : in STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
            i_index_column : in STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
@@ -41,11 +40,11 @@ begin
             if (i_reset_n = '0') then
                 -- nothing to do here
                 
-            elsif i_pause = '0' and i_write = '1' then
+            elsif i_write = '1' then
                 -- write to the graphic memory
                 graphic_storage(to_integer(unsigned(i_index_row)), to_integer(unsigned(i_index_column))) <= i_color;
                 
-            elsif i_pause = '0' and i_write = '0' then 
+            elsif i_write = '0' then 
                 -- read the graphic memory
                 square_color := graphic_storage(to_integer(unsigned(i_index_row)), to_integer(unsigned(i_index_column)));
                 

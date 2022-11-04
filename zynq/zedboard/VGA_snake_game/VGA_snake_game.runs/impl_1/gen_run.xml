@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7z020clg484-1" LaunchTime="1667140630">
+<GenRun Id="impl_1" LaunchPart="xc7z020clg484-1" LaunchTime="1667565344">
   <File Type="ROUTE-PWR" Name="design_1_wrapper_power_routed.rpt"/>
   <File Type="PA-TCL" Name="design_1_wrapper.tcl"/>
   <File Type="BITSTR-MMI" Name="design_1_wrapper.mmi"/>
@@ -89,6 +89,12 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/debounce.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sources_1/new/display_interface.vhd">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
@@ -102,6 +108,12 @@
       </FileInfo>
     </File>
     <File Path="$PSRCDIR/sources_1/new/graphic_memory.vhd">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/next_move.vhd">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -124,10 +136,8 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PSRCDIR/sources_1/imports/design_1_wrapper.vhd">
+    <File Path="$PGENDIR/sources_1/bd/design_1/hdl/design_1_wrapper.vhd">
       <FileInfo>
-        <Attr Name="ImportPath" Val="$PPRDIR/../VGA_Interface/VGA_Interface.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd"/>
-        <Attr Name="ImportTime" Val="1666524147"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>

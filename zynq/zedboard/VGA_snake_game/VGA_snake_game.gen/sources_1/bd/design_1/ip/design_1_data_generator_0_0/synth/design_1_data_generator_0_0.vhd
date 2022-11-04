@@ -58,6 +58,12 @@ ENTITY design_1_data_generator_0_0 IS
     i_clk : IN STD_LOGIC;
     i_reset_n : IN STD_LOGIC;
     o_data : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+    i_arrow_left : IN STD_LOGIC;
+    i_arrow_right : IN STD_LOGIC;
+    i_arrow_up : IN STD_LOGIC;
+    i_arrow_down : IN STD_LOGIC;
+    o_led : OUT STD_LOGIC_VECTOR(4 DOWNTO 0);
+    i_pause_button : IN STD_LOGIC;
     o_data_valid : OUT STD_LOGIC;
     i_data_ready : IN STD_LOGIC;
     o_sof : OUT STD_LOGIC;
@@ -73,6 +79,12 @@ ARCHITECTURE design_1_data_generator_0_0_arch OF design_1_data_generator_0_0 IS
       i_clk : IN STD_LOGIC;
       i_reset_n : IN STD_LOGIC;
       o_data : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+      i_arrow_left : IN STD_LOGIC;
+      i_arrow_right : IN STD_LOGIC;
+      i_arrow_up : IN STD_LOGIC;
+      i_arrow_down : IN STD_LOGIC;
+      o_led : OUT STD_LOGIC_VECTOR(4 DOWNTO 0);
+      i_pause_button : IN STD_LOGIC;
       o_data_valid : OUT STD_LOGIC;
       i_data_ready : IN STD_LOGIC;
       o_sof : OUT STD_LOGIC;
@@ -97,6 +109,12 @@ BEGIN
       i_clk => i_clk,
       i_reset_n => i_reset_n,
       o_data => o_data,
+      i_arrow_left => i_arrow_left,
+      i_arrow_right => i_arrow_right,
+      i_arrow_up => i_arrow_up,
+      i_arrow_down => i_arrow_down,
+      o_led => o_led,
+      i_pause_button => i_pause_button,
       o_data_valid => o_data_valid,
       i_data_ready => i_data_ready,
       o_sof => o_sof,
