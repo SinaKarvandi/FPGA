@@ -1,7 +1,7 @@
 -- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2022.1 (win64) Build 3526262 Mon Apr 18 15:48:16 MDT 2022
--- Date        : Mon Oct 24 19:44:31 2022
+-- Date        : Thu Nov 17 21:15:59 2022
 -- Host        : DESKTOP-SEM2DAL running 64-bit major release  (build 9200)
 -- Command     : write_vhdl -force -mode funcsim
 --               c:/Users/sina/Documents/FPGA/zynq/zedboard/VGA_snake_game/VGA_snake_game.gen/sources_1/bd/design_1/ip/design_1_dispaly_control_mux_0_0/design_1_dispaly_control_mux_0_0_sim_netlist.vhdl
