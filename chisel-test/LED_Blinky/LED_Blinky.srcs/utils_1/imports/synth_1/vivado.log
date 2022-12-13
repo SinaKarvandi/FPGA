@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# Vivado v2022.1 (64-bit)
+# SW Build 3526262 on Mon Apr 18 15:48:16 MDT 2022
+# IP Build 3524634 on Mon Apr 18 20:55:01 MDT 2022
+# Start of session at: Thu Dec  8 13:30:57 2022
+# Process ID: 15904
+# Current directory: C:/Users/sina/Documents/FPGA/chisel-test/LED_Blinky/LED_Blinky.srcs/utils_1/imports/synth_1
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent20196 C:\Users\sina\Documents\FPGA\chisel-test\LED_Blinky\LED_Blinky.srcs\utils_1\imports\synth_1\Blinky.dcp
+# Log file: C:/Users/sina/Documents/FPGA/chisel-test/LED_Blinky/LED_Blinky.srcs/utils_1/imports/synth_1/vivado.log
+# Journal file: C:/Users/sina/Documents/FPGA/chisel-test/LED_Blinky/LED_Blinky.srcs/utils_1/imports/synth_1\vivado.jou
+# Running On: DESKTOP-SEM2DAL, OS: Windows, CPU Frequency: 2496 MHz, CPU Physical cores: 6, Host memory: 16942 MB
+#-----------------------------------------------------------
+start_gui
+open_checkpoint C:/Users/sina/Documents/FPGA/chisel-test/LED_Blinky/LED_Blinky.srcs/utils_1/imports/synth_1/Blinky.dcp
+Command: open_checkpoint C:/Users/sina/Documents/FPGA/chisel-test/LED_Blinky/LED_Blinky.srcs/utils_1/imports/synth_1/Blinky.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.029 . Memory (MB): peak = 1654.430 ; gain = 0.000
+INFO: [Common 17-41] Interrupt caught. Command should exit soon.
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es:part0:1.2 available at C:/Xilinx/Vivado/2022.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/es/1.2/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es_revb:part0:1.0 available at C:/Xilinx/Vivado/2022.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120_revb/es/1.0/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at C:/Xilinx/Vivado/2022.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at C:/Xilinx/Vivado/2022.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670:part0:2.0 available at C:/Xilinx/Vivado/2022.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670/2.0/board.xml as part xczu67dr-fsve1156-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at C:/Xilinx/Vivado/2022.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+INFO: [Common 17-344] 'open_checkpoint' was cancelled
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2022.1/data/ip'.
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Dec  8 13:31:14 2022...
