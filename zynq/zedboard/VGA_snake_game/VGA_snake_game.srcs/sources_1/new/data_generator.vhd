@@ -33,7 +33,8 @@ architecture Behavioral of data_generator is
                         NOT_INITIALIZED,
                         IN_THE_MIDDLE_OF_INITIALIZATION,
                         INITIALIZING_SNAKE,
-                        CHANGING_STATE_EVENT
+                        CHANGING_STATE_EVENT,
+                        CHANGING_STATE_EVENT2
                        );
     -------------------------------- Debouncer ---------------------------------
     component debounce
@@ -160,6 +161,7 @@ architecture Behavioral of data_generator is
     signal stable_input_left   : STD_LOGIC;
     signal stable_input_pause  : STD_LOGIC;
     signal movement_input_mask : STD_LOGIC_VECTOR(3 downto 0);
+    signal previous_movement_input_mask : STD_LOGIC_VECTOR(3 downto 0);
     signal enable_movement     : STD_LOGIC := '0';
     signal perform_movement    : STD_LOGIC;
 
@@ -339,6 +341,7 @@ begin
                 enable_movement            <= '0';
                 snake_mgr_start_snake      <= '0';
                 snake_mgr_perform_movement <= '0';
+                previous_movement_input_mask <= (others => '0');
 
                 -- get the head of the snake
                 snake_current_head_index_row    <= (GLOBAL_WIDTH / GLOBAL_SQUARE_SIZE / 2) - 1;
@@ -404,9 +407,26 @@ begin
                             snake_current_head_index_column_temp := snake_current_head_index_column;
                             snake_current_head_index_row_temp    := snake_current_head_index_row + 1;
                         end if;
-
-                        perform_write <= '1';
-
+                        
+                        -- avoid snake to return on itself
+                        if (previous_movement_input_mask = "1000" and movement_input_mask = "0100")
+                            or (previous_movement_input_mask = "0100" and movement_input_mask = "1000")
+                            or (previous_movement_input_mask = "0001" and movement_input_mask = "0010")
+                            or (previous_movement_input_mask = "0010" and movement_input_mask = "0001") then
+                                
+                                enable_movement            <= '1';
+                                state <= SHOW_SCREEN;
+                            
+                            else 
+                                snake_current_head_index_row    <= snake_current_head_index_row_temp;
+                                snake_current_head_index_column <= snake_current_head_index_column_temp;
+                                previous_movement_input_mask <= movement_input_mask;
+                                state <= CHANGING_STATE_EVENT2;                            
+                            end if;
+                        
+                                                
+                    when CHANGING_STATE_EVENT2 =>
+                    
                         -- moving the snake
                         is_running                      <= '0';
                         snake_mgr_perform_movement      <= '1';
@@ -414,8 +434,9 @@ begin
                         index_row                       <= snake_mgr_index_row;
                         index_column                    <= snake_mgr_index_column;
                         color_write                     <= snake_mgr_color;
-                        snake_current_head_index_row    <= snake_current_head_index_row_temp;
-                        snake_current_head_index_column <= snake_current_head_index_column_temp;
+                        
+                        snake_mgr_new_head_index_row <= std_logic_vector(to_unsigned(snake_current_head_index_row, snake_mgr_new_head_index_row'length));
+                        snake_mgr_new_head_index_column <= std_logic_vector(to_unsigned(snake_current_head_index_column, snake_mgr_new_head_index_column'length));
 
                         if snake_mgr_action_completed = '1' then
                             state                      <= SHOW_SCREEN;

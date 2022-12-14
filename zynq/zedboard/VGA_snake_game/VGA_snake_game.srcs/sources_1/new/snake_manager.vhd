@@ -161,7 +161,7 @@ begin
                             state   <= CREATING_SNAKE_COMPLETED;
                             previous_tail_index_row <= temp_index_row;
                             previous_tail_index_column <= temp_index_column;
-                            o_color <= x"902";
+                            --o_color <= x"902";
                         end if;
 
                     when CREATING_SNAKE_COMPLETED =>
@@ -187,7 +187,7 @@ begin
                         state <= REMOVE_THE_TAIL;
 
                     when REMOVE_THE_TAIL =>
-
+  
                         o_perform_change_to_gmem <= '1';
                         o_index_row              <= previous_tail_index_row;
                         o_index_column           <= previous_tail_index_column;
@@ -201,14 +201,13 @@ begin
                         o_index_row              <= i_new_head_index_row;
                         o_index_column           <= i_new_head_index_column;
                         o_color                  <= x"f0f";
-
+                        
                         state <= NOTIFY_CALLER_THE_MODIFICATION_FINISHED;
                     
                     when NOTIFY_CALLER_THE_MODIFICATION_FINISHED =>
-                        
+                    
                         o_perform_change_to_gmem <= '0';
                         o_action_completed       <= '1';
-                        
                         temp_mem_address <= (others => '0');
                         
                         state <= APPLY_THE_MOVE_TO_MEMORY;
