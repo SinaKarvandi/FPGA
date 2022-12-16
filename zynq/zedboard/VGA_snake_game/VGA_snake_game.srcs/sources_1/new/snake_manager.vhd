@@ -16,6 +16,7 @@ entity snake_manager is
          i_new_head_index_column  : in  STD_LOGIC_VECTOR(31 downto 0); -- new head of snake (column)
 
          o_action_completed       : out STD_LOGIC;
+         o_check_for_lost         : out STD_LOGIC;
          o_perform_change_to_gmem : out STD_LOGIC;
          o_index_row              : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
          o_index_column           : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
@@ -122,6 +123,7 @@ begin
                 o_action_completed         <= '0';
                 previous_tail_index_row    <= (others => '0');
                 previous_tail_index_column <= (others => '0');
+                o_check_for_lost <= '0';
 
             else
                 -- perform snake move affairs
@@ -161,7 +163,11 @@ begin
                             state   <= CREATING_SNAKE_COMPLETED;
                             previous_tail_index_row <= temp_index_row;
                             previous_tail_index_column <= temp_index_column;
-                            --o_color <= x"902";
+                            
+                            ----------- test
+                            o_color <= x"902";
+                            o_index_row <= x"0000000e";
+                            o_index_column <= x"0000000a";
                         end if;
 
                     when CREATING_SNAKE_COMPLETED =>
@@ -202,10 +208,16 @@ begin
                         o_index_column           <= i_new_head_index_column;
                         o_color                  <= x"f0f";
                         
+                        -- check whether lost or addr
+                        o_check_for_lost <= '1';
+                        
                         state <= NOTIFY_CALLER_THE_MODIFICATION_FINISHED;
                     
                     when NOTIFY_CALLER_THE_MODIFICATION_FINISHED =>
-                    
+                        
+                        -- not check for lost anymore
+                        o_check_for_lost <= '0';
+                        
                         o_perform_change_to_gmem <= '0';
                         o_action_completed       <= '1';
                         temp_mem_address <= (others => '0');

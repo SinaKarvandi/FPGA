@@ -90,6 +90,8 @@ begin
         wait for 100 ns;
         
         reset_n <= '1';
+        wait for 20000 ns;
+
         arrow_up <= '1';
         wait;
         

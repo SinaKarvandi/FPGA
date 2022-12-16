@@ -78,7 +78,9 @@ architecture Behavioral of data_generator is
              i_index_row    : in  STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
              i_index_column : in  STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
              i_color        : in  STD_LOGIC_VECTOR(11 downto 0); -- if the 'i_write' is high, this is the color to be changed
-             o_data         : out STD_LOGIC_VECTOR(23 downto 0)
+             o_data         : out STD_LOGIC_VECTOR(23 downto 0);
+             i_check_for_lost : in STD_LOGIC;
+             o_lost         : out STD_LOGIC
             );
     end component;
 
@@ -106,19 +108,20 @@ architecture Behavioral of data_generator is
                 g_square_size : integer;
                 g_snake_len   : integer
                );
-        Port(i_clk                    : in  STD_LOGIC;
-             i_reset_n                : in  STD_LOGIC;
-             i_start_snake            : in  STD_LOGIC;
-             i_perform_movement       : in  STD_LOGIC;
-             i_new_head_index_row     : in  STD_LOGIC_VECTOR(31 downto 0); -- new head of snake (row)
-             i_new_head_index_column  : in  STD_LOGIC_VECTOR(31 downto 0); -- new head of snake (column)
+    Port(i_clk                    : in  STD_LOGIC;
+         i_reset_n                : in  STD_LOGIC;
+         i_start_snake            : in  STD_LOGIC;
+         i_perform_movement       : in  STD_LOGIC;
+         i_new_head_index_row     : in  STD_LOGIC_VECTOR(31 downto 0); -- new head of snake (row)
+         i_new_head_index_column  : in  STD_LOGIC_VECTOR(31 downto 0); -- new head of snake (column)
 
-             o_action_completed       : out STD_LOGIC;
-             o_perform_change_to_gmem : out STD_LOGIC;
-             o_index_row              : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
-             o_index_column           : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
-             o_color                  : out STD_LOGIC_VECTOR(11 downto 0)
-            );
+         o_action_completed       : out STD_LOGIC;
+         o_check_for_lost         : out STD_LOGIC;
+         o_perform_change_to_gmem : out STD_LOGIC;
+         o_index_row              : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
+         o_index_column           : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
+         o_color                  : out STD_LOGIC_VECTOR(11 downto 0)
+        );
     end component;
 
     ---------------------------- Fields Initializer ----------------------------
@@ -185,6 +188,10 @@ architecture Behavioral of data_generator is
     signal snake_mgr_index_row    : STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
     signal snake_mgr_index_column : STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
     signal snake_mgr_color        : STD_LOGIC_VECTOR(11 downto 0);
+    
+    signal is_lost        : STD_LOGIC;    
+    signal is_check_for_lost        : STD_LOGIC;    
+    signal is_check_for_lost_reg        : STD_LOGIC;    
 
 begin
 
@@ -247,8 +254,8 @@ begin
 
     ---------------------------- Next Move Indicator ------------------------------
     nmove : next_move
-        Generic Map(g_system_clock => SYSTEM_CLOCK_FREQUENCY
-                   )
+        Generic Map(g_system_clock => SYSTEM_CLOCK_FREQUENCY)
+        
         Port Map(i_clk               => i_clk,
                  i_reset_n           => i_reset_n,
                  i_enable            => enable_movement,
@@ -289,7 +296,9 @@ begin
                  i_index_row    => index_row, -- index to array (row)
                  i_index_column => index_column, -- index to array (column)
                  i_color        => color_write, -- if the 'i_write' is high, this is the color to be changed
-                 o_data         => o_data
+                 o_data         => o_data,
+                 i_check_for_lost => is_check_for_lost_reg,
+                 o_lost         => is_lost
                 );
 
     ------------------------------ Initializing Design ------------------------------
@@ -322,6 +331,7 @@ begin
             i_new_head_index_row     => snake_mgr_new_head_index_row, -- new head of snake (row)
             i_new_head_index_column  => snake_mgr_new_head_index_column, -- new head of snake (column)
 
+            o_check_for_lost => is_check_for_lost,
             o_perform_change_to_gmem => snake_mgr_perform_change_to_gmem,
             o_action_completed       => snake_mgr_action_completed,
             o_index_row              => snake_mgr_index_row, -- index to array (row)
@@ -415,6 +425,7 @@ begin
                             or (previous_movement_input_mask = "0010" and movement_input_mask = "0001") then
                                 
                                 enable_movement            <= '1';
+                                is_running                 <= '1';
                                 state <= SHOW_SCREEN;
                             
                             else 
@@ -437,7 +448,10 @@ begin
                         
                         snake_mgr_new_head_index_row <= std_logic_vector(to_unsigned(snake_current_head_index_row, snake_mgr_new_head_index_row'length));
                         snake_mgr_new_head_index_column <= std_logic_vector(to_unsigned(snake_current_head_index_column, snake_mgr_new_head_index_column'length));
-
+                        
+                        -- infer register to avoid pre-checks 
+                        is_check_for_lost_reg <= is_check_for_lost;
+                        
                         if snake_mgr_action_completed = '1' then
                             state                      <= SHOW_SCREEN;
                             enable_movement            <= '1';
@@ -452,7 +466,9 @@ begin
                         is_running    <= '1';
 
                         -- check for indicators of an "event" or a "pause"
-                        if pause_arrow_rising = '1' then
+                        if is_lost = '1' then
+                            enable_movement <= '0';
+                        elsif pause_arrow_rising = '1' then
                             state <= PAUSE_SCREEN;
                         elsif perform_movement = '1' then
                             state <= CHANGING_STATE_EVENT;

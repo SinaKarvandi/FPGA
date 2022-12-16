@@ -99,7 +99,7 @@ begin
                     o_output_mask       <= (others => '0');
                     o_perform_next_move <= '0';
                     clear_holders       <= '0';
-                elsif time_counter = g_system_clock * 2 then
+                elsif time_counter = g_system_clock then
                     --elsif time_counter = 1000 then
                     time_counter <= 0;
 
