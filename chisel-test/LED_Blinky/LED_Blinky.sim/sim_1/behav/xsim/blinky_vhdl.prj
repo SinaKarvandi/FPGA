@@ -1,6 +1,0 @@
-# compile vhdl design source files
-vhdl xil_defaultlib  \
-"../../../../LED_Blinky.srcs/sources_1/new/blinky.vhd" \
-
-# Do not sort compile order
-nosort
