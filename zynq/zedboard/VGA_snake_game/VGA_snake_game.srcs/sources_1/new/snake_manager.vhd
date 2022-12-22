@@ -6,7 +6,9 @@ entity snake_manager is
     Generic(g_width       : integer;
             g_height      : integer;
             g_square_size : integer;
-            g_snake_len   : integer
+            g_snake_len   : integer;
+            g_clock_freq   : integer
+
            );
     Port(i_clk                    : in  STD_LOGIC;
          i_reset_n                : in  STD_LOGIC;
@@ -30,36 +32,32 @@ architecture Behavioral of snake_manager is
     type STATE_TYPE is (IDLE,
                         INIT_SNAKE,
                         WAIT_FOR_MOVING_SNAKE,
+                        CREATING_INITIAL_RABIT,
                         CREATING_SNAKE_COMPLETED,
                         PERFORM_MOVING_THE_SNAKE,
                         REMOVE_THE_TAIL,
                         DRAW_THE_HEAD,
-                        
+                        CREATE_A_NEW_RABIT,
                         NOTIFY_CALLER_THE_MODIFICATION_FINISHED,
                         APPLY_THE_MOVE_TO_MEMORY,
-                        
                         WAIT_FOR_READ_1,
                         WAIT_FOR_READ_2,
-                        
                         CHECK_THE_MEMORY_ADDRESS_VALUE,
-                        
                         LAST_INDEX_FOUND,
-                        
-                        
+                        ADD_THE_RABIT_TO_THE_END_OF_TAIL,
+                        ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT1,
+                        ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT2,
                         WAIT_TO_READ_TAIL_1,
                         WAIT_TO_READ_TAIL_2,
                         TAIL_HAVE_FETCHED,
-                        
-                        MOVE_EVERYTHING_DOWN,    
+                        MOVE_EVERYTHING_DOWN,
                         WAIT_FOR_WRITE_1,
                         WAIT_FOR_WRITE_2,
-                        
                         WAIT_FOR_READ_FOR_MOVE_1,
                         WAIT_FOR_READ_FOR_MOVE_2,
                         AFTER_READING_THE_CURRENT_ADDRESS,
                         WAIT_FOR_WRITE_FOR_MOVE_1,
                         WAIT_FOR_WRITE_FOR_MOVE_2,
-                        
                         FINISHED_MOVING_SNAKE
                        );
 
@@ -77,10 +75,34 @@ architecture Behavioral of snake_manager is
     signal previous_tail_index_row    : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
     signal previous_tail_index_column : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
     
+    signal current_rabit_row    : STD_LOGIC_VECTOR(31 downto 0);
+    signal current_rabit_column : STD_LOGIC_VECTOR(31 downto 0);
+
+
     signal temp_mem_address : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
+    
+    signal rand1 : STD_LOGIC_VECTOR(31 downto 0);
+    signal rand2 : STD_LOGIC_VECTOR(31 downto 0);
+    
+    signal grow_snake   : std_logic                     := '0';
 
     ------------------------------- Instantiation -------------------------------
+    component rand_gen 
+        Generic(g_width       : integer;
+                g_height      : integer;
+                g_square_size : integer;
+                g_clock_freq   : integer
+               );
+        Port(i_clk                    : in  std_logic;
+             i_reset_n                : in  std_logic;
+             i_get_rand_on_next_cycle : in  std_logic;
+             
+             o_rand1       : out std_logic_vector(31 downto 0);
+             o_rand2       : out std_logic_vector(31 downto 0)
+            );
+    end component;
 
+    
     component bram_wf
         port(
             clk  : in  std_logic;
@@ -93,6 +115,21 @@ architecture Behavioral of snake_manager is
     end component;
 
 begin
+
+    ------------------------------- Port map -------------------------------
+    
+    random_gen : rand_gen 
+        Generic Map(g_width   => g_width,
+                g_height      => g_height,
+                g_square_size   => g_square_size,
+                g_clock_freq    => g_clock_freq
+               )
+        Port Map(i_clk  => i_clk,
+             i_reset_n   => i_reset_n,
+             i_get_rand_on_next_cycle => '1',
+             o_rand1       => rand1,
+             o_rand2       => rand2
+            );
 
     ------------------------------- Port map -------------------------------
 
@@ -123,7 +160,8 @@ begin
                 o_action_completed         <= '0';
                 previous_tail_index_row    <= (others => '0');
                 previous_tail_index_column <= (others => '0');
-                o_check_for_lost <= '0';
+                o_check_for_lost           <= '0';
+                grow_snake                 <= '0';
 
             else
                 -- perform snake move affairs
@@ -160,15 +198,26 @@ begin
 
                         -- check if it's ended or not
                         if g_snake_len = snake_length_counter then
-                            state   <= CREATING_SNAKE_COMPLETED;
-                            previous_tail_index_row <= temp_index_row;
+                            state                      <= CREATING_INITIAL_RABIT;
+                            previous_tail_index_row    <= temp_index_row;
                             previous_tail_index_column <= temp_index_column;
-                            
+
                             ----------- test
-                            o_color <= x"902";
-                            o_index_row <= x"0000000e";
-                            o_index_column <= x"0000000a";
+--                            o_color        <= x"902";
+--                            o_index_row    <= x"0000000e";
+--                            o_index_column <= x"0000000a";
                         end if;
+
+                    when CREATING_INITIAL_RABIT =>
+                        state                      <= CREATING_SNAKE_COMPLETED;
+                        
+                        -- initialize the rabit
+                        o_color              <= x"077";
+                        o_index_row    <= rand1;
+                        o_index_column <= rand2;
+                        
+                        current_rabit_row    <= rand1;
+                        current_rabit_column <= rand2;
 
                     when CREATING_SNAKE_COMPLETED =>
                         o_perform_change_to_gmem <= '0';
@@ -188,12 +237,32 @@ begin
 
                     when PERFORM_MOVING_THE_SNAKE =>
 
-
-                        --state <= WAIT_FOR_GETTING_TAIL_1;
+                        -- check if we eat the rabit
+                        if i_new_head_index_row = current_rabit_row and i_new_head_index_column = current_rabit_column then
+                            state <= CREATE_A_NEW_RABIT;
+                        else 
+                            state <= REMOVE_THE_TAIL;
+                        end if;   
+                        
+                    when CREATE_A_NEW_RABIT => 
+                    
+                        -- create another rabit
+                        o_perform_change_to_gmem <= '1';
+                        o_color              <= x"077";
+                        o_index_row    <= rand1;
+                        o_index_column <= rand2;
+                        
+                        current_rabit_row    <= rand1;
+                        current_rabit_column <= rand2;
+                        
+                        -- indicate that the snake should grow
+                        grow_snake <= '1';
+                        
+                        --state <= DRAW_THE_HEAD;
                         state <= REMOVE_THE_TAIL;
-
+                        
                     when REMOVE_THE_TAIL =>
-  
+
                         o_perform_change_to_gmem <= '1';
                         o_index_row              <= previous_tail_index_row;
                         o_index_column           <= previous_tail_index_column;
@@ -210,131 +279,153 @@ begin
                         
                         -- check whether lost or addr
                         o_check_for_lost <= '1';
-                        
                         state <= NOTIFY_CALLER_THE_MODIFICATION_FINISHED;
-                    
+
                     when NOTIFY_CALLER_THE_MODIFICATION_FINISHED =>
-                        
+
                         -- not check for lost anymore
                         o_check_for_lost <= '0';
-                        
+
                         o_perform_change_to_gmem <= '0';
                         o_action_completed       <= '1';
-                        temp_mem_address <= (others => '0');
-                        
+                        temp_mem_address         <= (others => '0');
+
                         state <= APPLY_THE_MOVE_TO_MEMORY;
-                        
+
                     when APPLY_THE_MOVE_TO_MEMORY =>
-                        
+
                         we   <= '0';
                         di   <= (others => '0');
                         addr <= temp_mem_address;
-                        
+
                         state <= WAIT_FOR_READ_1;
-                    
+
                     when WAIT_FOR_READ_1 =>
-                        
-                        temp_mem_address <= std_logic_vector(unsigned(temp_mem_address)+1);
-                        
+
+                        temp_mem_address <= std_logic_vector(unsigned(temp_mem_address) + 1);
+
                         state <= WAIT_FOR_READ_2;
-                    
+
                     when WAIT_FOR_READ_2 =>
-                        
+
                         state <= CHECK_THE_MEMORY_ADDRESS_VALUE;
-                    
+
                     when CHECK_THE_MEMORY_ADDRESS_VALUE =>
-                        
+
                         if unsigned(do) = 0 then
-                            state <= LAST_INDEX_FOUND;
-                            temp_mem_address <= std_logic_vector(unsigned(temp_mem_address)-1);
+                            state            <= LAST_INDEX_FOUND;
+                            temp_mem_address <= std_logic_vector(unsigned(temp_mem_address) - 1);
                         else
                             state <= APPLY_THE_MOVE_TO_MEMORY;
                         end if;
-                    
+
                     when LAST_INDEX_FOUND =>
-                        
+
                         we   <= '0';
                         di   <= (others => '0');
-                        addr <= std_logic_vector(unsigned(temp_mem_address)-2);
-                        
+                        addr <= std_logic_vector(unsigned(temp_mem_address) - 2);
+
                         state <= WAIT_TO_READ_TAIL_1;
-                        
+
                     when WAIT_TO_READ_TAIL_1 =>
-                        
+
                         state <= WAIT_TO_READ_TAIL_2;
-                        
+
                     when WAIT_TO_READ_TAIL_2 =>
                         
+                        if grow_snake = '1' then 
+                            grow_snake <= '0';
+                            state <= ADD_THE_RABIT_TO_THE_END_OF_TAIL;
+                        else
+                            state <= TAIL_HAVE_FETCHED;
+                            
+                            -- set the last tail
+                            previous_tail_index_row    <= do(63 downto 32);
+                            previous_tail_index_column <= do(31 downto 0);
+                        end if;
+
+                    when ADD_THE_RABIT_TO_THE_END_OF_TAIL =>
+                                            
+                        -- write the new tail as the last index + 1 of the list
+                        we   <= '1';
+                        di    <= previous_tail_index_row & previous_tail_index_column;
+                        addr <= std_logic_vector(unsigned(temp_mem_address));
+                        
+                        temp_mem_address <= std_logic_vector(unsigned(temp_mem_address) + 1);
+
+
+                        state <= ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT1;
+                        
+                    when ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT1 =>
+                        state <= ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT2;
+                    
+                    when ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT2 =>
                         state <= TAIL_HAVE_FETCHED;
                         
                     when TAIL_HAVE_FETCHED =>
-                        
-                        -- set the last tail
-                        previous_tail_index_row <= do(63 downto 32);
-                        previous_tail_index_column <= do(31 downto 0);
-                        
+
                         -- write the new tail as the last index of the list
                         we   <= '1';
                         di   <= do;
-                        addr <= std_logic_vector(unsigned(temp_mem_address)-1);
-                        
+                        addr <= std_logic_vector(unsigned(temp_mem_address) - 1);
+
                         state <= WAIT_FOR_WRITE_1;
-                    
+
                     when WAIT_FOR_WRITE_1 =>
-                        
+
                         state <= WAIT_FOR_WRITE_2;
-                    
+
                     when WAIT_FOR_WRITE_2 =>
-                    
-                        temp_mem_address <= std_logic_vector(unsigned(temp_mem_address)-2);
-                        state <= MOVE_EVERYTHING_DOWN;
-                        
+
+                        temp_mem_address <= std_logic_vector(unsigned(temp_mem_address) - 2);
+                        state            <= MOVE_EVERYTHING_DOWN;
+
                     when MOVE_EVERYTHING_DOWN =>
-                        
+
                         if unsigned(temp_mem_address) /= 0 then
-                            we   <= '0';
-                            di   <= (others => '0');
-                            addr <= std_logic_vector(unsigned(temp_mem_address)-1);
+                            we    <= '0';
+                            di    <= (others => '0');
+                            addr  <= std_logic_vector(unsigned(temp_mem_address) - 1);
                             state <= WAIT_FOR_READ_FOR_MOVE_1;
-                        
+
                         else
                             -- we reached to the top of the list, save the new head
-                            we   <= '1';
-                            di   <= i_new_head_index_row & i_new_head_index_column;
-                            addr <= (others => '0');
+                            we    <= '1';
+                            di    <= i_new_head_index_row & i_new_head_index_column;
+                            addr  <= (others => '0');
                             state <= FINISHED_MOVING_SNAKE;
                         end if;
-                        
+
                     when WAIT_FOR_READ_FOR_MOVE_1 =>
-                        
-                        temp_mem_address <= std_logic_vector(unsigned(temp_mem_address)-1);
-                        
+
+                        temp_mem_address <= std_logic_vector(unsigned(temp_mem_address) - 1);
+
                         state <= WAIT_FOR_READ_FOR_MOVE_2;
 
                     when WAIT_FOR_READ_FOR_MOVE_2 =>
-                        
+
                         state <= AFTER_READING_THE_CURRENT_ADDRESS;
 
                     when AFTER_READING_THE_CURRENT_ADDRESS =>
-                        
+
                         we   <= '1';
                         di   <= do;
-                        addr <= std_logic_vector(unsigned(temp_mem_address)+1);
-                        
+                        addr <= std_logic_vector(unsigned(temp_mem_address) + 1);
+
                         state <= WAIT_FOR_WRITE_FOR_MOVE_1;
-                    
+
                     when WAIT_FOR_WRITE_FOR_MOVE_1 =>
-                        
+
                         state <= WAIT_FOR_WRITE_FOR_MOVE_2;
-                        
+
                     when WAIT_FOR_WRITE_FOR_MOVE_2 =>
-                        
+
                         state <= MOVE_EVERYTHING_DOWN;
-                        
+
                     when FINISHED_MOVING_SNAKE =>
-                        
-                        we   <= '0';
-                        state                    <= WAIT_FOR_MOVING_SNAKE;
+
+                        we    <= '0';
+                        state <= WAIT_FOR_MOVING_SNAKE;
 
                 end case;
             end if;

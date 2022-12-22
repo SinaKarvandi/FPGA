@@ -72,15 +72,15 @@ architecture Behavioral of data_generator is
                 g_height      : integer;
                 g_square_size : integer
                );
-        Port(i_clk          : in  STD_LOGIC;
-             i_reset_n      : in  STD_LOGIC;
-             i_write        : in  STD_LOGIC;
-             i_index_row    : in  STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
-             i_index_column : in  STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
-             i_color        : in  STD_LOGIC_VECTOR(11 downto 0); -- if the 'i_write' is high, this is the color to be changed
-             o_data         : out STD_LOGIC_VECTOR(23 downto 0);
-             i_check_for_lost : in STD_LOGIC;
-             o_lost         : out STD_LOGIC
+        Port(i_clk            : in  STD_LOGIC;
+             i_reset_n        : in  STD_LOGIC;
+             i_write          : in  STD_LOGIC;
+             i_index_row      : in  STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
+             i_index_column   : in  STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
+             i_color          : in  STD_LOGIC_VECTOR(11 downto 0); -- if the 'i_write' is high, this is the color to be changed
+             o_data           : out STD_LOGIC_VECTOR(23 downto 0);
+             i_check_for_lost : in  STD_LOGIC;
+             o_lost           : out STD_LOGIC
             );
     end component;
 
@@ -106,22 +106,23 @@ architecture Behavioral of data_generator is
         Generic(g_width       : integer;
                 g_height      : integer;
                 g_square_size : integer;
-                g_snake_len   : integer
+                g_snake_len   : integer;
+                g_clock_freq   : integer
                );
-    Port(i_clk                    : in  STD_LOGIC;
-         i_reset_n                : in  STD_LOGIC;
-         i_start_snake            : in  STD_LOGIC;
-         i_perform_movement       : in  STD_LOGIC;
-         i_new_head_index_row     : in  STD_LOGIC_VECTOR(31 downto 0); -- new head of snake (row)
-         i_new_head_index_column  : in  STD_LOGIC_VECTOR(31 downto 0); -- new head of snake (column)
+        Port(i_clk                    : in  STD_LOGIC;
+             i_reset_n                : in  STD_LOGIC;
+             i_start_snake            : in  STD_LOGIC;
+             i_perform_movement       : in  STD_LOGIC;
+             i_new_head_index_row     : in  STD_LOGIC_VECTOR(31 downto 0); -- new head of snake (row)
+             i_new_head_index_column  : in  STD_LOGIC_VECTOR(31 downto 0); -- new head of snake (column)
 
-         o_action_completed       : out STD_LOGIC;
-         o_check_for_lost         : out STD_LOGIC;
-         o_perform_change_to_gmem : out STD_LOGIC;
-         o_index_row              : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
-         o_index_column           : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
-         o_color                  : out STD_LOGIC_VECTOR(11 downto 0)
-        );
+             o_action_completed       : out STD_LOGIC;
+             o_check_for_lost         : out STD_LOGIC;
+             o_perform_change_to_gmem : out STD_LOGIC;
+             o_index_row              : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
+             o_index_column           : out STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
+             o_color                  : out STD_LOGIC_VECTOR(11 downto 0)
+            );
     end component;
 
     ---------------------------- Fields Initializer ----------------------------
@@ -158,15 +159,15 @@ architecture Behavioral of data_generator is
     signal is_running              : STD_LOGIC := '0';
     signal is_initialize_completed : STD_LOGIC;
 
-    signal stable_input_up     : STD_LOGIC;
-    signal stable_input_down   : STD_LOGIC;
-    signal stable_input_right  : STD_LOGIC;
-    signal stable_input_left   : STD_LOGIC;
-    signal stable_input_pause  : STD_LOGIC;
-    signal movement_input_mask : STD_LOGIC_VECTOR(3 downto 0);
+    signal stable_input_up              : STD_LOGIC;
+    signal stable_input_down            : STD_LOGIC;
+    signal stable_input_right           : STD_LOGIC;
+    signal stable_input_left            : STD_LOGIC;
+    signal stable_input_pause           : STD_LOGIC;
+    signal movement_input_mask          : STD_LOGIC_VECTOR(3 downto 0);
     signal previous_movement_input_mask : STD_LOGIC_VECTOR(3 downto 0);
-    signal enable_movement     : STD_LOGIC := '0';
-    signal perform_movement    : STD_LOGIC;
+    signal enable_movement              : STD_LOGIC := '0';
+    signal perform_movement             : STD_LOGIC;
 
     signal snake_current_head_index_row    : INTEGER := 0;
     signal snake_current_head_index_column : INTEGER := 0;
@@ -188,10 +189,10 @@ architecture Behavioral of data_generator is
     signal snake_mgr_index_row    : STD_LOGIC_VECTOR(31 downto 0); -- index to array (row)
     signal snake_mgr_index_column : STD_LOGIC_VECTOR(31 downto 0); -- index to array (column)
     signal snake_mgr_color        : STD_LOGIC_VECTOR(11 downto 0);
-    
-    signal is_lost        : STD_LOGIC;    
-    signal is_check_for_lost        : STD_LOGIC;    
-    signal is_check_for_lost_reg        : STD_LOGIC;    
+
+    signal is_lost               : STD_LOGIC;
+    signal is_check_for_lost     : STD_LOGIC;
+    signal is_check_for_lost_reg : STD_LOGIC;
 
 begin
 
@@ -255,7 +256,7 @@ begin
     ---------------------------- Next Move Indicator ------------------------------
     nmove : next_move
         Generic Map(g_system_clock => SYSTEM_CLOCK_FREQUENCY)
-        
+
         Port Map(i_clk               => i_clk,
                  i_reset_n           => i_reset_n,
                  i_enable            => enable_movement,
@@ -290,15 +291,15 @@ begin
                     g_height      => GLOBAL_HEIGHT,
                     g_square_size => GLOBAL_SQUARE_SIZE
                    )
-        Port Map(i_clk          => i_clk,
-                 i_reset_n      => i_reset_n,
-                 i_write        => perform_write,
-                 i_index_row    => index_row, -- index to array (row)
-                 i_index_column => index_column, -- index to array (column)
-                 i_color        => color_write, -- if the 'i_write' is high, this is the color to be changed
-                 o_data         => o_data,
+        Port Map(i_clk            => i_clk,
+                 i_reset_n        => i_reset_n,
+                 i_write          => perform_write,
+                 i_index_row      => index_row, -- index to array (row)
+                 i_index_column   => index_column, -- index to array (column)
+                 i_color          => color_write, -- if the 'i_write' is high, this is the color to be changed
+                 o_data           => o_data,
                  i_check_for_lost => is_check_for_lost_reg,
-                 o_lost         => is_lost
+                 o_lost           => is_lost
                 );
 
     ------------------------------ Initializing Design ------------------------------
@@ -321,7 +322,8 @@ begin
         Generic Map(g_width       => GLOBAL_WIDTH,
                     g_height      => GLOBAL_HEIGHT,
                     g_square_size => GLOBAL_SQUARE_SIZE,
-                    g_snake_len   => GLOBAL_SNAKE_LEN
+                    g_snake_len   => GLOBAL_SNAKE_LEN,
+                    g_clock_freq  => SYSTEM_CLOCK_FREQUENCY
                    )
         Port Map(
             i_clk                    => i_clk,
@@ -331,7 +333,7 @@ begin
             i_new_head_index_row     => snake_mgr_new_head_index_row, -- new head of snake (row)
             i_new_head_index_column  => snake_mgr_new_head_index_column, -- new head of snake (column)
 
-            o_check_for_lost => is_check_for_lost,
+            o_check_for_lost         => is_check_for_lost,
             o_perform_change_to_gmem => snake_mgr_perform_change_to_gmem,
             o_action_completed       => snake_mgr_action_completed,
             o_index_row              => snake_mgr_index_row, -- index to array (row)
@@ -347,10 +349,10 @@ begin
         if (rising_edge(i_clk)) then
 
             if (i_reset_n = '0') then
-                state                      <= NOT_INITIALIZED;
-                enable_movement            <= '0';
-                snake_mgr_start_snake      <= '0';
-                snake_mgr_perform_movement <= '0';
+                state                        <= NOT_INITIALIZED;
+                enable_movement              <= '0';
+                snake_mgr_start_snake        <= '0';
+                snake_mgr_perform_movement   <= '0';
                 previous_movement_input_mask <= (others => '0');
 
                 -- get the head of the snake
@@ -417,41 +419,37 @@ begin
                             snake_current_head_index_column_temp := snake_current_head_index_column;
                             snake_current_head_index_row_temp    := snake_current_head_index_row + 1;
                         end if;
-                        
+
                         -- avoid snake to return on itself
-                        if (previous_movement_input_mask = "1000" and movement_input_mask = "0100")
-                            or (previous_movement_input_mask = "0100" and movement_input_mask = "1000")
-                            or (previous_movement_input_mask = "0001" and movement_input_mask = "0010")
-                            or (previous_movement_input_mask = "0010" and movement_input_mask = "0001") then
-                                
-                                enable_movement            <= '1';
-                                is_running                 <= '1';
-                                state <= SHOW_SCREEN;
-                            
-                            else 
-                                snake_current_head_index_row    <= snake_current_head_index_row_temp;
-                                snake_current_head_index_column <= snake_current_head_index_column_temp;
-                                previous_movement_input_mask <= movement_input_mask;
-                                state <= CHANGING_STATE_EVENT2;                            
-                            end if;
-                        
-                                                
+                        if (previous_movement_input_mask = "1000" and movement_input_mask = "0100") or (previous_movement_input_mask = "0100" and movement_input_mask = "1000") or (previous_movement_input_mask = "0001" and movement_input_mask = "0010") or (previous_movement_input_mask = "0010" and movement_input_mask = "0001") then
+
+                            enable_movement <= '1';
+                            is_running      <= '1';
+                            state           <= SHOW_SCREEN;
+
+                        else
+                            snake_current_head_index_row    <= snake_current_head_index_row_temp;
+                            snake_current_head_index_column <= snake_current_head_index_column_temp;
+                            previous_movement_input_mask    <= movement_input_mask;
+                            state                           <= CHANGING_STATE_EVENT2;
+                        end if;
+
                     when CHANGING_STATE_EVENT2 =>
-                    
+
                         -- moving the snake
-                        is_running                      <= '0';
-                        snake_mgr_perform_movement      <= '1';
-                        perform_write                   <= snake_mgr_perform_change_to_gmem;
-                        index_row                       <= snake_mgr_index_row;
-                        index_column                    <= snake_mgr_index_column;
-                        color_write                     <= snake_mgr_color;
-                        
-                        snake_mgr_new_head_index_row <= std_logic_vector(to_unsigned(snake_current_head_index_row, snake_mgr_new_head_index_row'length));
+                        is_running                 <= '0';
+                        snake_mgr_perform_movement <= '1';
+                        perform_write              <= snake_mgr_perform_change_to_gmem;
+                        index_row                  <= snake_mgr_index_row;
+                        index_column               <= snake_mgr_index_column;
+                        color_write                <= snake_mgr_color;
+
+                        snake_mgr_new_head_index_row    <= std_logic_vector(to_unsigned(snake_current_head_index_row, snake_mgr_new_head_index_row'length));
                         snake_mgr_new_head_index_column <= std_logic_vector(to_unsigned(snake_current_head_index_column, snake_mgr_new_head_index_column'length));
-                        
+
                         -- infer register to avoid pre-checks 
                         is_check_for_lost_reg <= is_check_for_lost;
-                        
+
                         if snake_mgr_action_completed = '1' then
                             state                      <= SHOW_SCREEN;
                             enable_movement            <= '1';
