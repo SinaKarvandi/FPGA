@@ -107,7 +107,7 @@ architecture Behavioral of data_generator is
                 g_height      : integer;
                 g_square_size : integer;
                 g_snake_len   : integer;
-                g_clock_freq   : integer
+                g_clock_freq  : integer
                );
         Port(i_clk                    : in  STD_LOGIC;
              i_reset_n                : in  STD_LOGIC;

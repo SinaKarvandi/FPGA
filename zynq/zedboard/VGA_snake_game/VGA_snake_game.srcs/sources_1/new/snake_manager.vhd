@@ -7,8 +7,7 @@ entity snake_manager is
             g_height      : integer;
             g_square_size : integer;
             g_snake_len   : integer;
-            g_clock_freq   : integer
-
+            g_clock_freq  : integer
            );
     Port(i_clk                    : in  STD_LOGIC;
          i_reset_n                : in  STD_LOGIC;
@@ -74,73 +73,72 @@ architecture Behavioral of snake_manager is
 
     signal previous_tail_index_row    : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
     signal previous_tail_index_column : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
-    
+
     signal current_rabit_row    : STD_LOGIC_VECTOR(31 downto 0);
     signal current_rabit_column : STD_LOGIC_VECTOR(31 downto 0);
 
-
     signal temp_mem_address : STD_LOGIC_VECTOR(9 downto 0) := (others => '0');
-    
+
     signal rand1 : STD_LOGIC_VECTOR(31 downto 0);
     signal rand2 : STD_LOGIC_VECTOR(31 downto 0);
-    
-    signal grow_snake   : std_logic                     := '0';
+
+    signal grow_snake : std_logic := '0';
 
     ------------------------------- Instantiation -------------------------------
-    component rand_gen 
+    component rand_gen
         Generic(g_width       : integer;
                 g_height      : integer;
                 g_square_size : integer;
-                g_clock_freq   : integer
+                g_clock_freq  : integer
                );
         Port(i_clk                    : in  std_logic;
              i_reset_n                : in  std_logic;
              i_get_rand_on_next_cycle : in  std_logic;
-             
-             o_rand1       : out std_logic_vector(31 downto 0);
-             o_rand2       : out std_logic_vector(31 downto 0)
+             o_rand1                  : out std_logic_vector(31 downto 0);
+             o_rand2                  : out std_logic_vector(31 downto 0)
             );
     end component;
 
-    
     component bram_wf
         port(
-            clk  : in  std_logic;
-            we   : in  std_logic;
-            en   : in  std_logic;
-            addr : in  std_logic_vector(9 downto 0);
-            di   : in  std_logic_vector(63 downto 0);
-            do   : out std_logic_vector(63 downto 0)
+            clk   : in  std_logic;
+            rst_n : in  std_logic;
+            we    : in  std_logic;
+            en    : in  std_logic;
+            addr  : in  std_logic_vector(9 downto 0);
+            di    : in  std_logic_vector(63 downto 0);
+            do    : out std_logic_vector(63 downto 0)
         );
     end component;
 
 begin
 
     ------------------------------- Port map -------------------------------
-    
-    random_gen : rand_gen 
-        Generic Map(g_width   => g_width,
-                g_height      => g_height,
-                g_square_size   => g_square_size,
-                g_clock_freq    => g_clock_freq
-               )
-        Port Map(i_clk  => i_clk,
-             i_reset_n   => i_reset_n,
-             i_get_rand_on_next_cycle => '1',
-             o_rand1       => rand1,
-             o_rand2       => rand2
-            );
+
+    random_gen : rand_gen
+        Generic Map(g_width       => g_width,
+                    g_height      => g_height,
+                    g_square_size => g_square_size,
+                    g_clock_freq  => g_clock_freq
+                   )
+        Port Map(i_clk                    => i_clk,
+                 i_reset_n                => i_reset_n,
+                 i_get_rand_on_next_cycle => '1',
+                 o_rand1                  => rand1,
+                 o_rand2                  => rand2
+                );
 
     ------------------------------- Port map -------------------------------
 
     bram : bram_wf
         port map(
-            clk  => i_clk,
-            we   => we,
-            en   => '1',
-            addr => addr,
-            di   => di,
-            do   => do
+            clk   => i_clk,
+            rst_n => i_reset_n,
+            we    => we,
+            en    => '1',
+            addr  => addr,
+            di    => di,
+            do    => do
         );
 
     ------------------------------- Logic -------------------------------
@@ -203,19 +201,19 @@ begin
                             previous_tail_index_column <= temp_index_column;
 
                             ----------- test
---                            o_color        <= x"902";
---                            o_index_row    <= x"0000000e";
---                            o_index_column <= x"0000000a";
+                            --                            o_color        <= x"902";
+                            --                            o_index_row    <= x"0000000e";
+                            --                            o_index_column <= x"0000000a";
                         end if;
 
                     when CREATING_INITIAL_RABIT =>
-                        state                      <= CREATING_SNAKE_COMPLETED;
-                        
+                        state <= CREATING_SNAKE_COMPLETED;
+
                         -- initialize the rabit
-                        o_color              <= x"077";
+                        o_color        <= x"077";
                         o_index_row    <= rand1;
                         o_index_column <= rand2;
-                        
+
                         current_rabit_row    <= rand1;
                         current_rabit_column <= rand2;
 
@@ -240,27 +238,27 @@ begin
                         -- check if we eat the rabit
                         if i_new_head_index_row = current_rabit_row and i_new_head_index_column = current_rabit_column then
                             state <= CREATE_A_NEW_RABIT;
-                        else 
+                        else
                             state <= REMOVE_THE_TAIL;
-                        end if;   
-                        
-                    when CREATE_A_NEW_RABIT => 
-                    
+                        end if;
+
+                    when CREATE_A_NEW_RABIT =>
+
                         -- create another rabit
                         o_perform_change_to_gmem <= '1';
-                        o_color              <= x"077";
-                        o_index_row    <= rand1;
-                        o_index_column <= rand2;
-                        
+                        o_color                  <= x"077";
+                        o_index_row              <= rand1;
+                        o_index_column           <= rand2;
+
                         current_rabit_row    <= rand1;
                         current_rabit_column <= rand2;
-                        
+
                         -- indicate that the snake should grow
                         grow_snake <= '1';
-                        
+
                         --state <= DRAW_THE_HEAD;
                         state <= REMOVE_THE_TAIL;
-                        
+
                     when REMOVE_THE_TAIL =>
 
                         o_perform_change_to_gmem <= '1';
@@ -276,10 +274,10 @@ begin
                         o_index_row              <= i_new_head_index_row;
                         o_index_column           <= i_new_head_index_column;
                         o_color                  <= x"f0f";
-                        
+
                         -- check whether lost or addr
                         o_check_for_lost <= '1';
-                        state <= NOTIFY_CALLER_THE_MODIFICATION_FINISHED;
+                        state            <= NOTIFY_CALLER_THE_MODIFICATION_FINISHED;
 
                     when NOTIFY_CALLER_THE_MODIFICATION_FINISHED =>
 
@@ -332,36 +330,35 @@ begin
                         state <= WAIT_TO_READ_TAIL_2;
 
                     when WAIT_TO_READ_TAIL_2 =>
-                        
-                        if grow_snake = '1' then 
+
+                        if grow_snake = '1' then
                             grow_snake <= '0';
-                            state <= ADD_THE_RABIT_TO_THE_END_OF_TAIL;
+                            state      <= ADD_THE_RABIT_TO_THE_END_OF_TAIL;
                         else
                             state <= TAIL_HAVE_FETCHED;
-                            
+
                             -- set the last tail
                             previous_tail_index_row    <= do(63 downto 32);
                             previous_tail_index_column <= do(31 downto 0);
                         end if;
 
                     when ADD_THE_RABIT_TO_THE_END_OF_TAIL =>
-                                            
+
                         -- write the new tail as the last index + 1 of the list
                         we   <= '1';
-                        di    <= previous_tail_index_row & previous_tail_index_column;
+                        di   <= previous_tail_index_row & previous_tail_index_column;
                         addr <= std_logic_vector(unsigned(temp_mem_address));
-                        
+
                         temp_mem_address <= std_logic_vector(unsigned(temp_mem_address) + 1);
 
-
                         state <= ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT1;
-                        
+
                     when ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT1 =>
                         state <= ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT2;
-                    
+
                     when ADD_THE_RABIT_TO_THE_END_OF_TAIL_WAIT2 =>
                         state <= TAIL_HAVE_FETCHED;
-                        
+
                     when TAIL_HAVE_FETCHED =>
 
                         -- write the new tail as the last index of the list

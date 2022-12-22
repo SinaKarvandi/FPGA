@@ -30,7 +30,7 @@ architecture Behavioral of graphic_memory is
     signal is_reseting_started : std_logic := '0';
     signal reseting_i          : integer   := 0;
     signal reseting_j          : integer   := 0;
-    
+
     signal draw_lost : std_logic := '0';
 
 begin
@@ -86,16 +86,16 @@ begin
 
                 -- check if it's not equal to black color
                 if i_check_for_lost = '1' and (square_color /= "000000000000" and square_color /= x"077") then
-                    
-                        o_lost     <= '1';
-                        reseting_i <= 0;
-                        reseting_j <= 0;
-                        draw_lost  <= '1';
+
+                    o_lost     <= '1';
+                    reseting_i <= 0;
+                    reseting_j <= 0;
+                    draw_lost  <= '1';
                 end if;
-                
+
                 -- write to the graphic memory
                 graphic_storage(to_integer(unsigned(i_index_row)), to_integer(unsigned(i_index_column))) <= i_color;
-                
+
             elsif i_write = '0' then
                 -- read the graphic memory
                 square_color := graphic_storage(to_integer(unsigned(i_index_row)), to_integer(unsigned(i_index_column)));
